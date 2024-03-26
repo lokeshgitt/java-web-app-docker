@@ -25,6 +25,7 @@ jobs:
     - name: Update Spring Test Version
       run: |
         # Find and update pom.xml files
+           echo "NEW_VERSION: $NEW_VERSION"
            sed -i 's|<artifactId>spring-test<\/artifactId>\s*<version>[^<]*<\/version>|<artifactId>spring-test<\/artifactId><version>4.3.28.RELEASE<\/version>|' pom.xml
            find . -name 'pom.xml' -type f -exec cat {} \;
 
