@@ -19,7 +19,9 @@ jobs:
       run: |
          echo "NEW_VERSION: $NEW_VERSION"
          find . -name 'pom.xml' -type f -exec sed -i "s|<artifactId>spring-test<\/artifactId>\(.*\)<version>.*<\/version>|<artifactId>spring-test<\/artifactId>\1<version>${NEW_VERSION}<\/version>|" {} +
-
+         echo "NEW_VERSION: $NEW_VERSION"
+         find . -name 'pom.xml' -type f -print
+         find . -name 'pom.xml' -type f -exec sed -i "s|<artifactId>spring-test<\/artifactId>\(.*\)<version>.*<\/version>|<artifactId>spring-test<\/artifactId>\1<version>${NEW_VERSION}<\/version>|" {} +
     - name: Update Spring Test Version
       run: |
         # Find and update pom.xml files
