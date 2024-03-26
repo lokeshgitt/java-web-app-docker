@@ -9,18 +9,19 @@ jobs:
   update-spring-test:
     runs-on: ubuntu-latest
 
-    env:
-      NEW_VERSION: "4.3.28.RELEASE"
-
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
+    - name: Set New Version
+      run: echo "::set-env name=NEW_VERSION::4.3.28.RELEASE"
+
     - name: Update Spring Test Version
       run: |
         # Find and update pom.xml files
-        find . -name 'pom.xml' -type f -exec sed -i "s|<artifactId>spring-test<\/artifactId>\(.*\)<version>.*<\/version>|<artifactId>spring-test<\/artifactId>\1<version>${{ env.NEW_VERSION }}<\/version>|" {} +
+        find . -name 'pom.xml' -type f -exec sed -i "s|<artifactId>spring-test<\/artifactId>\(.*\)<version>.*<\/version>|<artifactId>spring-test<\/artifactId>\1<version>${NEW_VERSION}<\/version>|" {} +
         find . -name 'pom.xml' -type f -exec cat {} \;
+
     - name: Commit and Push Changes
       run: |
         git config --global user.email "you@example.com"
