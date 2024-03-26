@@ -25,8 +25,8 @@ jobs:
     - name: Update Spring Test Version
       run: |
         # Find and update pom.xml files
-        sed -i 's|<artifactId>spring-test<\/artifactId>\(.*\)<version>.*<\/version>|<artifactId>spring-test<\/artifactId>\1<version>4.3.28.RELEASE<\/version>|' pom.xml
-        find . -name 'pom.xml' -type f -exec cat {} \;
+           sed -i 's|<artifactId>spring-test<\/artifactId>\s*<version>[^<]*<\/version>|<artifactId>spring-test<\/artifactId><version>4.3.28.RELEASE<\/version>|' pom.xml
+           find . -name 'pom.xml' -type f -exec cat {} \;
 
     - name: Commit and Push Changes
       run: |
