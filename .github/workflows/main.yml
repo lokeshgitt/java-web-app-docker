@@ -13,14 +13,17 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
+    - name: Install xmlstarlet
+      run: sudo apt-get update && sudo apt-get install -y xmlstarlet
+
     - name: Set New Version
       run: echo "NEW_VERSION=4.3.28.RELEASE" >> $GITHUB_ENV
 
-    - name: Debug
+    - name: Update Spring Test Version
       run: |
-         echo "NEW_VERSION: $NEW_VERSION"
-         sed -i 's|<artifactId>spring-test<\/artifactId>[^<]*<version>[^<]*<\/version>|<artifactId>spring-test<\/artifactId><version>4.3.28.RELEASE<\/version>|' pom.xml
-         cat pom.xml
+        xmlstarlet ed -L -N pom="http://maven.apache.org/POM/4.0.0" \
+          --update "//pom:dependency[pom:artifactId='spring-test']/pom:version" \
+          --value "${NEW_VERSION}" pom.xml
 
     - name: Commit and Push Changes
       run: |
