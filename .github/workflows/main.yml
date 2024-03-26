@@ -15,6 +15,10 @@ jobs:
 
     - name: Set New Version
       run: echo "NEW_VERSION=4.3.28.RELEASE" >> $GITHUB_ENV
+    - name: Debug
+      run: |
+         echo "NEW_VERSION: $NEW_VERSION"
+         find . -name 'pom.xml' -type f -exec sed -i "s|<artifactId>spring-test<\/artifactId>\(.*\)<version>.*<\/version>|<artifactId>spring-test<\/artifactId>\1<version>${NEW_VERSION}<\/version>|" {} +
 
     - name: Update Spring Test Version
       run: |
