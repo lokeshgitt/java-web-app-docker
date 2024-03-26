@@ -3,7 +3,7 @@ name: Update Spring Test Version
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   update-spring-test:
