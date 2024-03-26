@@ -17,13 +17,14 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y xmlstarlet
 
     - name: Set New Version
-      run: echo "NEW_VERSION=4.3.28.RELEASE" >> $GITHUB_ENV
+      run: echo "NEW_VERSION=4.3.29.RELEASE" >> $GITHUB_ENV
 
     - name: Update Spring Test Version
       run: |
-        xmlstarlet ed -L -N pom="http://maven.apache.org/POM/4.0.0" \
-          --update "//pom:dependency[pom:artifactId='spring-test']/pom:version" \
-          --value "${NEW_VERSION}" pom.xml
+        xmlstarlet ed --inplace -N pom="http://maven.apache.org/POM/4.0.0" \
+        --update "//pom:dependency[pom:artifactId='spring-test']/pom:version" \
+        --value "${NEW_VERSION}" pom.xml
+
 
     - name: Commit and Push Changes
       run: |
