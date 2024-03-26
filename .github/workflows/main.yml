@@ -15,23 +15,16 @@ jobs:
 
     - name: Set New Version
       run: echo "NEW_VERSION=4.3.28.RELEASE" >> $GITHUB_ENV
+
     - name: Debug
       run: |
          echo "NEW_VERSION: $NEW_VERSION"
-         find . -name 'pom.xml' -type f -exec sed -i "s|<artifactId>spring-test<\/artifactId>\(.*\)<version>.*<\/version>|<artifactId>spring-test<\/artifactId>\1<version>${NEW_VERSION}<\/version>|" {} +
-         echo "NEW_VERSION: $NEW_VERSION"
-         find . -name 'pom.xml' -type f -print
-         find . -name 'pom.xml' -type f -exec sed -i "s|<artifactId>spring-test<\/artifactId>\(.*\)<version>.*<\/version>|<artifactId>spring-test<\/artifactId>\1<version>${NEW_VERSION}<\/version>|" {} +
-    - name: Update Spring Test Version
-      run: |
-        # Find and update pom.xml files
-           echo "NEW_VERSION: $NEW_VERSION"
-           sed -i 's|<artifactId>spring-test<\/artifactId>\s*<version>[^<]*<\/version>|<artifactId>spring-test<\/artifactId><version>4.3.28.RELEASE<\/version>|' pom.xml
-           find . -name 'pom.xml' -type f -exec cat {} \;
+         sed -i 's|<artifactId>spring-test<\/artifactId>\s*<version>[^<]*<\/version>|<artifactId>spring-test<\/artifactId><version>4.3.28.RELEASE<\/version>|' pom.xml
+         cat pom.xml
 
     - name: Commit and Push Changes
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
         git add .
-        git diff --quiet && git diff --staged --quiet || git commit -m "Update spring-test version to $GITHUB_ENV" && git push origin ${{ github.ref }}
+        git diff --quiet && git diff --staged --quiet || git commit -m "Update spring-test version to ${NEW_VERSION}" && git push origin ${{ github.ref }}
