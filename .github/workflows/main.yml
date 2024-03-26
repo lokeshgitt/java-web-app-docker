@@ -19,7 +19,7 @@ jobs:
     - name: Debug
       run: |
          echo "NEW_VERSION: $NEW_VERSION"
-         sed -i 's|<artifactId>spring-test<\/artifactId>\s*<version>[^<]*<\/version>|<artifactId>spring-test<\/artifactId><version>4.3.28.RELEASE<\/version>|' pom.xml
+         sed -i 's|<artifactId>spring-test<\/artifactId>[^<]*<version>[^<]*<\/version>|<artifactId>spring-test<\/artifactId><version>4.3.28.RELEASE<\/version>|' pom.xml
          cat pom.xml
 
     - name: Commit and Push Changes
