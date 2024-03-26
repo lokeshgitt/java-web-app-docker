@@ -1,0 +1,30 @@
+name: Update Spring Test Version
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update-spring-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Update Spring Test Version
+      run: |
+        # Define the new version of spring-test
+        new_version="4.3.28.RELEASE"
+
+        # Find and update pom.xml files
+        find . -name 'pom.xml' -type f -exec sed -i "s|<artifactId>spring-test<\/artifactId>\(.*\)<version>.*<\/version>|<artifactId>spring-test<\/artifactId>\1<version>${new_version}<\/version>|" {} +
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.email "you@example.com"
+        git config --global user.name "lokeshhgitt"
+        git add .
+        git commit -m "Update spring-test version to ${new_version}"
+        git push origin ${{ github.ref }}
